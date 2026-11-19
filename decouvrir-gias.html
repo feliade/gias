@@ -1,0 +1,611 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#321653">
+<meta name="description" content="Découvrez les fonctionnalités de GiaS : gestion de stock, caisse, inventaire, rapports PDF et Excel, multi-boutiques et assistant IA.">
+<title>Découvrir GiaS | Fonctionnalités de gestion de stock</title>
+<link rel="icon" type="image/png" href="logo-gias.png">
+
+<style>
+:root {
+  --purple:#321653;
+  --purple2:#51277f;
+  --purple3:#7040aa;
+  --violet-950:#24103f;
+  --violet-900:#321653;
+  --violet-800:#472078;
+  --gold:#e8b93f;
+  --gold-300:#f5d981;
+  --gold-500:#e8b93f;
+  --ink:#241b2e;
+  --muted:#70677a;
+  --white:#fff;
+  --line:#ece4f3;
+  --bg:#fbf9fe;
+  --shadow:0 12px 35px rgba(49,22,83,.09);
+}
+* {box-sizing:border-box;margin:0;padding:0}
+html {scroll-behavior:smooth}
+body {
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+  color:var(--ink);
+  line-height:1.65;
+  background:
+    radial-gradient(circle at 5% 5%,#fff3d5 0,transparent 27rem),
+    radial-gradient(circle at 95% 15%,#eee4fc 0,transparent 30rem),
+    var(--bg);
+}
+a {text-decoration:none;color:inherit}
+img {max-width:100%}
+button {font:inherit;cursor:pointer}
+.container {width:min(1160px,calc(100% - 36px));margin:auto}
+:focus-visible {outline:3px solid var(--gold);outline-offset:3px}
+
+/* ============ HEADER UNIFIÉ ============ */
+.site-header {
+  position:sticky;top:0;z-index:1000;
+  background:rgba(36,16,63,.92);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.12);
+  color:var(--white);
+}
+.header-inner {
+  display:flex;align-items:center;justify-content:space-between;
+  gap:20px;min-height:76px;padding-block:10px;
+}
+.brand {display:flex;align-items:center;gap:13px;text-decoration:none}
+.brand-logo {
+  width:44px;height:44px;border-radius:13px;padding:4px;
+  background:#fff;object-fit:contain;
+  border:1px solid rgba(255,255,255,.4);
+  box-shadow:0 8px 24px rgba(0,0,0,.2);
+}
+.brand-name {margin:0;font-size:1.35rem;font-weight:850;line-height:1.1;letter-spacing:-.04em;color:#fff}
+.brand-tag {margin:2px 0 0;font-size:.76rem;color:rgba(255,255,255,.78)}
+.main-nav {display:flex;align-items:center;gap:28px}
+.nav-list {display:flex;align-items:center;gap:22px;margin:0;padding:0;list-style:none}
+.nav-link {
+  position:relative;padding:6px 2px;
+  color:rgba(255,255,255,.82);text-decoration:none;
+  font-size:.92rem;font-weight:600;transition:color .2s ease;
+}
+.nav-link:hover,.nav-link.active {color:var(--white)}
+.nav-link::after {
+  content:"";position:absolute;left:0;bottom:0;
+  width:100%;height:2px;border-radius:2px;background:var(--gold-500);
+  transform:scaleX(0);transform-origin:right;transition:transform .25s ease;
+}
+.nav-link:hover::after,.nav-link.active::after {transform:scaleX(1);transform-origin:left}
+.button {
+  display:inline-flex;justify-content:center;align-items:center;gap:8px;
+  min-height:47px;padding:11px 18px;border:1px solid transparent;border-radius:12px;
+  text-decoration:none;font-size:.92rem;font-weight:800;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.button:hover {transform:translateY(-2px)}
+.button-gold {color:var(--violet-950);background:linear-gradient(135deg,#ffe9a6,var(--gold-500));box-shadow:0 9px 20px rgba(0,0,0,.15)}
+.button-violet {color:#fff;background:linear-gradient(135deg,var(--purple3),var(--violet-900));box-shadow:0 8px 18px rgba(71,32,120,.17)}
+.button-light {color:var(--violet-800);border-color:#d9c8eb;background:#fff}
+.nav-btn {min-height:40px;padding:8px 16px;font-size:.88rem;border-radius:10px}
+.nav-toggle {
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:42px;height:42px;padding:9px;
+  border:1px solid rgba(255,255,255,.25);border-radius:10px;
+  background:rgba(255,255,255,.08);
+}
+.nav-toggle span {display:block;width:100%;height:2px;border-radius:2px;background:var(--white);transition:transform .25s ease, opacity .25s ease}
+@media (max-width:880px) {
+  .nav-toggle {display:flex}
+  .main-nav {
+    position:absolute;top:100%;left:0;right:0;
+    flex-direction:column;align-items:stretch;gap:16px;padding:20px;
+    background:var(--violet-950);border-bottom:1px solid rgba(255,255,255,.15);
+    box-shadow:0 20px 40px rgba(0,0,0,.35);
+    opacity:0;visibility:hidden;transform:translateY(-10px);
+    transition:opacity .25s ease, transform .25s ease, visibility .25s;
+  }
+  .main-nav.is-open {opacity:1;visibility:visible;transform:translateY(0)}
+  .nav-list {flex-direction:column;align-items:stretch;gap:8px}
+  .nav-link {display:block;padding:10px 12px;border-radius:10px}
+  .nav-link:hover,.nav-link.active {background:rgba(255,255,255,.08)}
+  .nav-link::after {display:none}
+  .nav-cta .nav-btn {width:100%}
+}
+
+/* ============ HERO ============ */
+.hero-band {
+  color:white;
+  background:linear-gradient(125deg,#24103f,#51277f 65%,#7040aa);
+  position:relative;overflow:hidden;
+}
+.hero-band:before,.hero-band:after {
+  content:"";position:absolute;border:1px solid rgba(255,255,255,.09);
+  border-radius:50%;pointer-events:none;
+}
+.hero-band:before {width:450px;height:450px;right:-140px;top:-230px}
+.hero-band:after {width:300px;height:300px;left:-160px;bottom:-200px}
+.hero {
+  position:relative;z-index:1;text-align:center;
+  max-width:850px;margin:auto;padding:62px 0 85px;
+}
+.eyebrow {
+  display:inline-block;color:#ffe39a;border:1px solid rgba(255,227,154,.4);
+  background:rgba(255,255,255,.08);padding:7px 17px;border-radius:30px;
+  font-size:.78rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:23px;
+}
+.hero h1 {font-size:clamp(2.3rem,5.5vw,4rem);line-height:1.12;letter-spacing:-2px;margin-bottom:20px}
+.hero h1 span {color:var(--gold)}
+.hero p {max-width:690px;margin:auto;color:#e6ddef;font-size:1.08rem}
+.hero-actions {display:flex;justify-content:center;flex-wrap:wrap;gap:13px;margin-top:28px}
+.btn {
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:13px 24px;border-radius:11px;font-weight:850;font-size:.9rem;transition:.2s;
+}
+.btn:hover {transform:translateY(-3px)}
+.btn-gold {background:linear-gradient(135deg,#ffe9a6,#e8b93f);color:#321653;box-shadow:0 7px 20px rgba(0,0,0,.17)}
+.btn-outline {color:white;border:1px solid rgba(255,255,255,.45)}
+
+/* ============ CONTENU ============ */
+main {padding:65px 0 80px}
+.section {margin-top:60px;scroll-margin-top:90px}
+.section:first-child {margin-top:0}
+.section-heading {text-align:center;max-width:720px;margin:0 auto 36px}
+.kicker {color:#a47717;font-size:.76rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:9px}
+.section-heading h2 {color:var(--purple);font-size:clamp(1.8rem,3vw,2.5rem);line-height:1.2;letter-spacing:-1px}
+.section-heading p {margin-top:12px;color:var(--muted)}
+
+.feature-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:19px}
+.feature-card {
+  display:flex;gap:18px;padding:26px 27px;
+  background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:19px;
+  transition:transform .25s,box-shadow .25s,border-color .25s;
+}
+.feature-card:hover {transform:translateY(-5px);box-shadow:var(--shadow);border-color:#d8c3ec}
+.feature-icon {
+  flex-shrink:0;width:52px;height:52px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#fff3ce,#ffe39a);border-radius:15px;font-size:24px;
+}
+.feature-card h3 {color:var(--purple);font-size:1.1rem;line-height:1.4;margin-bottom:7px}
+.feature-card p {font-size:.89rem;color:var(--muted);line-height:1.65}
+.feature-card ul {margin:12px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.feature-card li {position:relative;padding-left:20px;font-size:.85rem;color:#554b61}
+.feature-card li::before {content:"✓";position:absolute;left:0;top:0;color:#167447;font-weight:900}
+
+/* Tableau comparatif simple */
+.compare {
+  overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow);
+}
+.compare table {width:100%;border-collapse:collapse;min-width:560px;font-size:.88rem}
+.compare th {background:#f4edfc;color:var(--purple);text-align:left;padding:14px 16px;font-weight:850}
+.compare td {padding:13px 16px;border-top:1px solid var(--line);color:#554b61}
+.compare td:first-child {font-weight:700;color:var(--purple)}
+.compare tr td:last-child {color:#167447;font-weight:700}
+
+/* Étapes */
+.steps {display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.step {
+  padding:24px;border:1px solid var(--line);border-radius:18px;background:#fff;text-align:center;
+}
+.step strong {display:block;color:var(--purple);font-size:2rem;line-height:1}
+.step h3 {margin:10px 0 6px;color:var(--purple);font-size:1.02rem}
+.step p {color:var(--muted);font-size:.86rem}
+
+/* CTA */
+.promise {
+  margin-top:65px;padding:42px 30px;border-radius:25px;
+  background:linear-gradient(125deg,#291043,#573087);color:white;
+  text-align:center;box-shadow:var(--shadow);position:relative;overflow:hidden;
+}
+.promise:after {
+  content:"";position:absolute;width:250px;height:250px;
+  border:1px solid rgba(255,255,255,.12);border-radius:50%;right:-100px;top:-120px;
+}
+.promise h2 {font-size:clamp(1.65rem,3vw,2.25rem);margin-bottom:12px;position:relative;z-index:1}
+.promise h2 span {color:var(--gold)}
+.promise p {max-width:730px;margin:0 auto 25px;color:#e6ddef;font-size:.98rem;position:relative;z-index:1}
+.buttons {display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:13px;position:relative;z-index:1}
+.btn-white {color:var(--purple);background:white}
+
+/* ============ FOOTER UNIFIÉ ============ */
+.site-footer {
+  position:relative;overflow:hidden;
+  background:linear-gradient(160deg,var(--violet-950) 0%,#190a2d 100%);
+  color:rgba(255,255,255,.82);padding:64px 0 28px;
+  border-top:1px solid rgba(255,255,255,.12);
+}
+.site-footer::before {
+  content:"";position:absolute;width:460px;height:460px;top:-280px;right:-120px;
+  border-radius:50%;background:radial-gradient(circle,rgba(232,185,63,.14) 0%,transparent 70%);pointer-events:none;
+}
+.footer-grid {
+  position:relative;z-index:1;display:grid;
+  grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:36px;
+  padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.12);
+}
+.footer-brand-col .brand-name {color:var(--white)}
+.footer-desc {margin:16px 0 18px;font-size:.9rem;line-height:1.65;color:rgba(255,255,255,.72);max-width:320px}
+.footer-badges {display:flex;flex-wrap:wrap;gap:8px}
+.footer-badges span {
+  padding:5px 10px;border-radius:8px;background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.14);font-size:.76rem;font-weight:600;color:#ffedb7;
+}
+.footer-title {margin:0 0 16px;color:var(--white);font-size:.95rem;font-weight:800;letter-spacing:.02em}
+.footer-links,.footer-contacts {margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-links a {text-decoration:none;font-size:.89rem;color:rgba(255,255,255,.74);transition:color .2s ease, transform .2s ease;display:inline-block}
+.footer-links a:hover {color:var(--gold-300);transform:translateX(3px)}
+.footer-contacts a {
+  display:flex;flex-direction:column;padding:8px 12px;border-radius:10px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
+  text-decoration:none;transition:background .2s ease, border-color .2s ease;
+}
+.footer-contacts a:hover {background:rgba(255,255,255,.1);border-color:var(--gold-500)}
+.contact-role {font-size:.76rem;color:rgba(255,255,255,.68)}
+.contact-num {font-size:.88rem;font-weight:700;color:var(--gold-300);margin-top:2px}
+.footer-bottom {
+  position:relative;z-index:1;display:flex;flex-wrap:wrap;
+  justify-content:space-between;align-items:center;gap:12px;
+  padding-top:24px;font-size:.83rem;color:rgba(255,255,255,.65);
+}
+.footer-bottom p {margin:0}
+.footer-bottom strong {color:var(--white)}
+
+/* RESPONSIVE */
+@media(max-width:960px) {.footer-grid {grid-template-columns:repeat(2,1fr);gap:32px}}
+@media(max-width:760px) {
+  .feature-grid {grid-template-columns:1fr}
+  .steps {grid-template-columns:1fr}
+  .hero {padding:45px 0 60px}
+  .feature-card {padding:22px 19px}
+}
+@media(max-width:580px) {
+  .site-footer {padding-top:48px}
+  .footer-grid {grid-template-columns:1fr;gap:28px}
+  .footer-bottom {flex-direction:column;text-align:center}
+}
+@media(max-width:430px) {
+  .container {width:calc(100% - 26px)}
+  .brand-name {font-size:1.35rem}
+  .brand-logo {width:44px;height:44px}
+  .brand-tag {font-size:.68rem}
+  .hero h1 {letter-spacing:-1px}
+  .promise {padding:34px 19px}
+  .btn {width:100%}
+}
+@media (prefers-reduced-motion: reduce) {
+  html {scroll-behavior:auto}
+  *,*::before,*::after {transition-duration:.01ms !important}
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER UNIFIÉ -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="brand" aria-label="Accueil GiaS">
+      <img src="logo-gias.png" alt="Logo GiaS" class="brand-logo">
+      <div>
+        <p class="brand-name">GiaS</p>
+        <p class="brand-tag">Gestion intelligente de stock</p>
+      </div>
+    </a>
+
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="main-nav" id="mainNav" aria-label="Navigation principale">
+      <ul class="nav-list">
+        <li><a href="index.html" class="nav-link">Accueil</a></li>
+        <li><a href="decouvrir-gias.html" class="nav-link active" aria-current="page">Fonctionnalités</a></li>
+        <li><a href="pourquoi-gias.html" class="nav-link">10 Avantages</a></li>
+        <li><a href="index.html#licences" class="nav-link">Licences &amp; IA</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="https://wa.me/2290161304004?text=Bonjour%2C%20je%20souhaite%20des%20informations%20sur%20GiaS." target="_blank" rel="noopener" class="button button-gold nav-btn">💬 WhatsApp</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero-band">
+  <div class="container">
+    <div class="hero">
+      <span class="eyebrow">Découvrir GiaS</span>
+      <h1>Tout ce qu'il faut pour <span>gérer</span> votre commerce</h1>
+      <p>
+        Une seule application pour suivre vos stocks, votre caisse,
+        vos ventes et vos rapports. Simple, rapide, et pensée pour
+        les réalités de votre boutique.
+      </p>
+      <div class="hero-actions">
+        <a href="index.html#licences" class="btn btn-gold">Voir les licences</a>
+        <a href="pourquoi-gias.html" class="btn btn-outline">10 raisons de choisir GiaS</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <!-- FONCTIONNALITÉS PRINCIPALES -->
+  <section class="section" id="fonctionnalites">
+    <div class="section-heading">
+      <p class="kicker">Fonctionnalités</p>
+      <h2>Un outil complet, sans complexité inutile</h2>
+      <p>Chaque fonctionnalité répond à un besoin concret de votre quotidien.</p>
+    </div>
+
+    <div class="feature-grid">
+
+      <article class="feature-card">
+        <div class="feature-icon">📦</div>
+        <div>
+          <h3>Gestion des stocks</h3>
+          <p>Suivez vos quantités en temps réel, vos entrées et vos sorties, et évitez les ruptures comme les surstocks.</p>
+          <ul>
+            <li>Fiches produits avec prix d'achat et de vente</li>
+            <li>Alertes de stock faible</li>
+            <li>Historique des mouvements</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">🧾</div>
+        <div>
+          <h3>Caisse &amp; ventes</h3>
+          <p>Enregistrez vos ventes au comptant ou à crédit, suivez vos encaissements et vos reliquats.</p>
+          <ul>
+            <li>Ventes rapides au comptoir</li>
+            <li>Gestion des crédits clients</li>
+            <li>Suivi des versements de caisse</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">📋</div>
+        <div>
+          <h3>Inventaire assisté</h3>
+          <p>Préparez vos fiches de comptage et comparez le stock théorique au stock physique.</p>
+          <ul>
+            <li>Fiches de comptage prêtes à imprimer</li>
+            <li>Détection des écarts</li>
+            <li>Régularisation après validation</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div>
+          <h3>Rapports clairs</h3>
+          <p>Des états professionnels pour décider, justifier et partager.</p>
+          <ul>
+            <li>États de stock et historiques de ventes</li>
+            <li>Export PDF et Excel</li>
+            <li>Listes de produits et fiches d'inventaire</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">🏪</div>
+        <div>
+          <h3>Multi-boutiques</h3>
+          <p>Selon votre licence, pilotez plusieurs boutiques depuis une même gestion.</p>
+          <ul>
+            <li>Transferts de stock entre boutiques</li>
+            <li>Rapports consolidés multi-boutiques</li>
+            <li>Droits d'accès par utilisateur</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <div>
+          <h3>Assistant IA en option</h3>
+          <p>Posez vos questions en langage naturel et obtenez des analyses sur vos ventes et vos stocks.</p>
+          <ul>
+            <li>Produits les plus vendus</li>
+            <li>Risques de rupture</li>
+            <li>Suggestions de réapprovisionnement</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">🔌</div>
+        <div>
+          <h3>Fonctionne hors ligne</h3>
+          <p>GiaS est installé sur votre ordinateur Windows. Vous continuez à vendre même sans connexion Internet.</p>
+          <ul>
+            <li>Opérations locales sans Internet</li>
+            <li>Données stockées sur votre installation</li>
+            <li>IA uniquement avec connexion</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">👥</div>
+        <div>
+          <h3>Utilisateurs &amp; rôles</h3>
+          <p>Attribuez des droits adaptés à chaque membre de votre équipe.</p>
+          <ul>
+            <li>Caissiers, gérants, responsables</li>
+            <li>Accès limité selon le rôle</li>
+            <li>Meilleur contrôle de la caisse</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- COMMENT ÇA MARCHE -->
+  <section class="section" id="comment-ca-marche">
+    <div class="section-heading">
+      <p class="kicker">Prise en main</p>
+      <h2>En 3 étapes, vous êtes opérationnel</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <strong>1</strong>
+        <h3>Choisissez votre licence</h3>
+        <p>Essentiel, Standard, Multi-Store ou Entreprise, selon le nombre de boutiques et de produits.</p>
+      </div>
+      <div class="step">
+        <strong>2</strong>
+        <h3>Installez &amp; configurez</h3>
+        <p>Nous installons GiaS, nous saisissons vos produits et nous formons votre équipe dans votre boutique.</p>
+      </div>
+      <div class="step">
+        <strong>3</strong>
+        <h3>Vendez &amp; pilotez</h3>
+        <p>Vendez, suivez vos stocks, contrôlez votre caisse et activez l'IA si vous le souhaitez.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- POUR QUI -->
+  <section class="section" id="pour-qui">
+    <div class="section-heading">
+      <p class="kicker">Pour qui ?</p>
+      <h2>Pensé pour votre type de commerce</h2>
+    </div>
+    <div class="compare">
+      <table>
+        <thead>
+          <tr><th>Votre activité</th><th>Ce que GiaS vous apporte</th><th>Licence conseillée</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Boutique de quartier</td><td>Stock simple, caisse claire, rapports rapides</td><td>Essentiel</td></tr>
+          <tr><td>Commerce établi</td><td>Catalogue illimité, suivi complet, support offert</td><td>Standard</td></tr>
+          <tr><td>Petite chaîne (jusqu'à 5 boutiques)</td><td>Transferts, rapports consolidés</td><td>Multi-Store</td></tr>
+          <tr><td>Grossiste / Distributeur</td><td>Produits illimités, support prioritaire</td><td>Entreprise</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="promise">
+    <h2>Prêt à découvrir <span>GiaS</span> en vrai ?</h2>
+    <p>
+      Demandez une démonstration, choisissez votre licence,
+      ou posez-nous vos questions sur WhatsApp.
+    </p>
+    <div class="buttons">
+      <a href="index.html#licences" class="btn btn-gold">Découvrir les licences</a>
+      <a href="https://wa.me/2290161304004?text=Bonjour%2C%20je%20souhaite%20une%20d%C3%A9monstration%20de%20GiaS." target="_blank" rel="noopener noreferrer" class="btn btn-white">Demander une démo</a>
+      <a href="index.html" class="btn btn-outline">Retour à l'accueil</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER UNIFIÉ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="index.html" class="brand" aria-label="Retour à l'accueil GiaS">
+          <img src="logo-gias.png" alt="Logo GiaS" class="brand-logo">
+          <div>
+            <p class="brand-name">GiaS</p>
+            <p class="brand-tag">Gestion intelligente de stock</p>
+          </div>
+        </a>
+        <p class="footer-desc">
+          Le logiciel de gestion commerciale pensé pour les boutiques, grossistes et entreprises. Fonctionne hors ligne sur Windows avec assistant IA en option.
+        </p>
+        <div class="footer-badges">
+          <span>💻 Windows</span>
+          <span>🔌 Hors ligne</span>
+          <span>💳 Paiement FCFA</span>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-title">Navigation</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="decouvrir-gias.html">Fonctionnalités</a></li>
+          <li><a href="pourquoi-gias.html">10 raisons de choisir GiaS</a></li>
+          <li><a href="index.html#licences">Licences (paiement unique)</a></li>
+          <li><a href="index.html#assistant-ia">Abonnements Assistant IA</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-title">Solutions &amp; Services</h3>
+        <ul class="footer-links">
+          <li><a href="index.html#pack">Pack PC Tout-en-Un</a></li>
+          <li><a href="index.html#saisie">Saisie &amp; formation en boutique</a></li>
+          <li><a href="index.html#maintenance">Maintenance annuelle</a></li>
+          <li><a href="index.html#questions">Questions fréquentes (FAQ)</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-title">Équipe à votre écoute</h3>
+        <ul class="footer-contacts">
+          <li>
+            <a href="https://wa.me/2290161304004" target="_blank" rel="noopener">
+              <span class="contact-role">👑 Direction GiaS</span>
+              <span class="contact-num">+229 01 61 30 40 04</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://wa.me/2290196828323" target="_blank" rel="noopener">
+              <span class="contact-role">🤝 Support technique</span>
+              <span class="contact-num">+229 01 96 82 83 23</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://wa.me/2290162050729" target="_blank" rel="noopener">
+              <span class="contact-role">👩💼 Assistance &amp; formation</span>
+              <span class="contact-num">+229 01 62 05 07 29</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="currentYear">2026</span> <strong>GiaS — Gestion intelligente de stock</strong>. Tous droits réservés.</p>
+      <p>Prix affichés en Francs CFA (FCFA) • Paiement sécurisé MTN MoMo &amp; Espèces</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  "use strict";
+  var yearEl = document.getElementById("currentYear");
+  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+  var navToggle = document.getElementById('navToggle');
+  var mainNav = document.getElementById('mainNav');
+  if (navToggle && mainNav) {
+    navToggle.addEventListener('click', function () {
+      var isOpen = mainNav.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    mainNav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        mainNav.classList.remove('is-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
